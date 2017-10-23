@@ -1,9 +1,0 @@
-====
-Todo
-====
-
-.. todo::
-   Add Device Examples
-
-.. todo::
-   Remove Todo Page

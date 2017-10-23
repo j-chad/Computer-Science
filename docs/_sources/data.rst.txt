@@ -1,0 +1,519 @@
+===================
+Data Representation
+===================
+
+**Binary** - It's as easy as 01, 10, 11
+=======================================
+Since computers cannot store information in the same way that humans can,
+they must store them using a number system called Binary. Binary is a ``base 2`` number system. This means it only has two values,
+represented with a :math:`1` or a :math:`0`. The decimal system that we are used to is a `base 10` system and has :math:`10` values (:math:`0-9`).
+Computers represent all data in binary, with a high voltage representing a ``1`` and a low voltage representing a ``0``. Binary can also be stored as any other variable with two states,
+such as the black and white in a barcode.
+
+.. note::
+
+   The base of a number will be shown in subscript
+
+   e.g. :math:`01001_2` Binary or :math:`9_{10}` Decimal
+
+| Decimal numbers can be split into columns:
+| :math:`156_{10} = 1 \times 10^2 + 5 \times 10^1 + 6 \times 10^0`
+
+| Binary numbers work exactly the same, but with a base of 2:
+| :math:`156_{10} = 1 \times 2^7 + 0 \times 2^6 + 0 \times 2^5 + 1 \times 2^4 + 1 \times 2^3 + 1 \times 2^2 + 0 \times 2^1 + 0 \times 2^0`
+| So therefore the binary representation of the number :math:`156_{10}` is :math:`100111010_2`
+
+.. admonition:: Example
+
+   If you wanted to convert the number :math:`531_{10}` to binary:
+
+   | :math:`531_{10} = 2^9 + 2^4 + 2^1 + 2^0`
+   | so :math:`531_{10} = 1000010011_2`
+
+**Bits** and **Bytes**, And Everything Nice
+-------------------------------------------
+"Bit" stands for binary digit. A bit can be high voltage (1), or it can be low voltage (0).
+A whole lot of bits will make a number. 8 bits is equal to a byte.
+
+A byte can hold a maximum value of 255 and a minimum of 0:
+
+.. math::
+
+   11111111_2 &= 1 \times 2^7 + 1 \times 2^6 + 1 \times 2^5 + 1 \times 2^4 + 1 \times 2^3 + 1 \times 2^2 + 1 \times 2^1 + 1 \times 2^0 \\
+              &= 255
+
+   00000000_2 & = 0 \times 2^7 + 0 \times 2^6 + 1 \times 2^5 + 0 \times 2^4 + 0 \times 2^3 + 0 \times 2^2 + 0 \times 2^1 + 0 \times 2^0 \\
+              & = 0
+
+Safety In **Numbers**
+=====================
+So far we've seen how to represent positive integers, but we cannot represent negative integers.
+
+Sign Bits
+---------
+A simple way to add in negative numbers would be to use a simple sign bit.
+This means that instead of using all 8 bits of a byte for the number, we only use
+7 and reserve the last bit to represent either a positive number (0) or a negative number (1).
+
+.. admonition:: Example
+
+   .. math::
+      7  &= 00000111_2\\
+      -7 &= 10000111_2
+
+This is a very simple way to represent numbers, and it comes with a few flaws.
+The number :math:`10000000_2 (-0_{10})` is different to the number :math:`00000000_2 (+0_{10})` in this system,
+even though it is actually the same number. The sign bit does not work so well when we
+attempt to perform arithmetic on it and leads to some confusing maths.
+
+.. admonition:: Example
+
+   Shown is the same numbers being added, both in decimal and binary.
+   We use the binary addition algorithm to add the binary.
+   This means we follow the following rules:
+
+   For each column:
+      * ``0, 1 = 1``
+      * ``0, 0 = 0``
+      * ``1, 1 = 10`` (The 1 is carried)
+
+   .. math::
+
+      \begin{align}
+         \frac{
+            \begin{array}[b]{r}
+               00100010_2\\
+               10001100_2
+            \end{array}
+         }{
+            10101110_2
+         }
+         &&
+         \frac{
+            \begin{array}[b]{r}
+               34_{10}\\
+               -12_{10}
+            \end{array}
+         }{
+            22
+         }
+      \end{align}
+
+   If we now convert the binary number back to decimal with the sign bit,
+   we now get an answer of :math:`-46_{10}` **not** :math:`22_{10}`
+
+A Better Way!
+-------------
+If we think about decimal numbers, when we add together two opposite numbers
+such as :math:`-5` and :math:`5` they equal :math:`0`. It turns out the same can be
+true for binary numbers. This method is called **Two's compliment**.
+
+.. admonition:: Example
+
+   The negative of :math:`12` is :math:`-12`.
+   Together they add to :math:`0`.
+
+   The binary representation of :math:`12` is :math:`00000111`
+
+   .. math::
+
+      \frac{
+         \begin{array}[b]{r}
+              00000111\\
+            + ????????
+         \end{array}
+      }{
+         00000000
+      }
+
+It turns out that to find the negative of a binary number using two's compliment, we simply flip all the bits and add 1.
+So all `0`'s become `1`'s and all `1`'s become `0`'s and 00000001 is added.
+
+.. admonition:: Example
+
+   To find -12 in binary:
+      1) Flip all the bits: `00000111` becomes `11111000`
+      2) Add `1`: `11111000` becomes `11111001`
+
+   :math:`-12 = 11111001`
+
+.. tip::
+
+   This technique to find the two's compliment for a number, works with some clever tricks.
+   By adding the reflected number to the original number, it creates a pattern of `1`'s. Because it must equal `0`, not `1`
+   we simply add `1` to it, so that it is equal to `0`
+
+   .. admonition:: Example
+
+      .. math::
+
+         \frac{
+            \begin{array}[b]{r}
+                 00000111\\
+               + ????????
+            \end{array}
+         }{
+            00000000
+         }
+
+      .. math::
+
+         \frac{
+            \begin{array}[b]{r}
+                 00000111\\
+               + 11111000
+            \end{array}
+         }{
+            11111111
+         }
+
+      .. math::
+
+         \frac{
+            \begin{array}[b]{r}
+                 00000111\\
+               + 11111001
+            \end{array}
+         }{
+            (1)00000000
+         }
+
+      The carried 1 is lost as the number must remain within a certain size (1 byte in this example).
+
+A negative binary integer using this technique will work with addition without any additional math.
+This also means subtraction is easy, as you can simply convert the second integer into a compliment and perform addition.
+
+.. admonition:: Example
+
+   :math:`-12_10 = 11111001_2`
+
+Hexadecimal
+-----------
+Humans find it very hard to read and understand long number sequences in binary
+
+.. admonition:: Example
+
+   Try reading this::
+
+      00000011 01001111 01100010
+      10011010 10111011 11011010
+      11001101 01010100 00101100
+      10001001 01001000 10111010
+      01001111 10010011 11111010
+      01111111 10011000 00010010
+      10110100 11101101 10000101
+      00110000 10100011 10110110
+      11100001 01010000 00011110
+      10101011 10010011 10010001
+      01011000 10001010 01010011
+      11100111 01010111 00001010
+      10110110 01111100 10011100
+      00101110 00011010 11110000
+      00101100 01011110 01010001
+      11110011 11000111 00101111
+
+To make it easier for us to read and understand, we use another number system named **Hexadecimal**.
+Hexadecimal is a **base 16** number system. This means that it has 16 symbols to represent numbers.
+We use the numbers 0-9 and the letters A-F as these symbols.
+
+To convert between binary and hexadecimal:
+
+   1. Starting from the right, split the bits up into "half-bytes" (groups of 4)
+   2. Pad the leftmost group with ``0``'s so that it has 4 bits
+   3. Convert each group into decimal
+   4. If the decimal number is bigger than 9, replace with "A" (10), "B" (11), "C" (12), "D" (13), "E" (14) or "F" (15).
+
+.. admonition:: Example
+
+   To convert the first 3 bytes of the above binary:
+
+   ::
+
+      1. 0000 0011 0100 1111 0110 0010
+      2. Left-most group already has 4 bits
+      3. 0 3 4 15 6 2
+      4. 0 3 4 F 6 2
+
+
+
+No **Strings** Attached
+=======================
+In order for a computer to store text, it must still use the binary system. Computers achieve this with the use
+of character encodings. Character encodings map a letter or symbol to a number which can be stored in the computer.
+
+Ascii
+-----
+Ascii is one of the first character encodings and contains the english alphabet and some extra characters.
+Ascii is an old encoding and is very rarely used anymore. Ascii contains 127 characters and can only be used for
+english text. This is a fixed width encoding, the number for each character will always take up a byte (8 bits).
+
+.. admonition:: Example
+
+   In ascii the following characters assign to the following binary numbers
+
+   ========= ============ =======
+   Character    Binary    Decimal
+   ========= ============ =======
+   ``H``     ``01001000`` ``72``
+   ``e``     ``01100101`` ``65``
+   ``l``     ``01101100`` ``108``
+   ``o``     ``01101111`` ``111``
+   ``A``     ``01000001`` ``65``
+   ``s``     ``01110011`` ``115``
+   ``c``     ``01100011`` ``99``
+   ``i``     ``01101001`` ``105``
+   ``,``     ``00101100`` ``44``
+   ``!``     ``00100001`` ``33``
+   (space)   ``00100000`` ``32``
+   ========= ============ =======
+
+   So the sentence: ``"Hello, Ascii!"`` becomes::
+
+      01001000 H
+      01100101 e
+      01101100 l
+      01101100 l
+      01101111 o
+      00101100 ,
+      00100000
+      01000001 A
+      01110011 s
+      01100011 c
+      01101001 i
+      01101001 i
+      00100001 !
+
+Ascii takes up a small amount of space due to each character only taking a byte.
+However this means that there is a very restrictive character set.
+All text written must be using the english language. This can lead to problems when we
+want to write in languages that use a different character set.
+
+Enter Unicode ★
+---------------
+Unicode is an encoding **standard** which contains almost
+every possible symbol or character you could ever dream of. Unlike Ascii, which has 127
+Characters, Unicode defines :math:`109,384` characters and has space for :math:`1,002,614` more characters.
+This is a total of :math:`1,111,998` possible characters. That's a lot of characters, and is probably more than we
+will ever need.
+
+Unicode is however, not a character encoding and it cannot directly represent strings.
+It is simply a standard table of which numbers map to which characters, known as code points.
+All unicode encodings must use these code points when deciding what number relates to which character.
+But it is up to the encoding to decide how to implement these numbers.
+The most popular unicode encodings are:
+
+* UTF-8
+* UTF-16
+* UTF-32
+
+Each encoding has pros and cons and some are better for different use cases.
+
+UTF-8
++++++
+This is probably the most popular of the encodings. It is a variable-width encoding, which
+means that the number of bytes taken up by a character can change depending on the character.
+This causes the most commonly used characters to take up much less space than more foreign characters such as: :code:`〶 (postal mark)`.
+
+.. note::
+
+   UTF-8 achieves variable-width encoding by using the top bits of bytes to store the number of bytes.
+
+   * 1 Byte (0 - 127)
+      - The byte must start with `0` denoting that it is the only byte
+      - This leaves 7 bits for the character
+   * 2 Bytes (128 - 2,047)
+      - The first byte starts with 110
+      - This leaves 11 bits for the character
+   * 3 Bytes (2,047 - 65,535)
+      - The first byte starts with 1110
+      - This leaves 16 bits for the character
+   * 4 Bytes (65,536 - 1,114,111)
+      - The first byte starts with 11110
+      - This leaves 21 bits for the character
+
+   Additionally, all bytes after the first byte (except in a single byte character for obvious reasons) start with 10.
+   This is so that if you have a loss of data, you can still tell that it is not the start of a character (which could ruin all of the text).
+
+   .. admonition:: Example
+
+      * 1 Byte Character: :code:`A`
+         - Unicode Code Point: :code:`01000001`
+         - UTF-8 Encoding: :code:`01000001`
+      * 2 Byte Character: :code:`©`
+         - Unicode Code Point: :code:`10101001`
+         - UTF-8 Encoding: :code:`11000010 10101001`
+      * 3 Byte Character: :code:`ࢯ`
+         - Unicode Code Point: :code:`‭1000 10101111‬`
+         - UTF-8 Encoding: :code:`11100000 10100010 10101111`
+      * 4 Byte Character: :code:`𐋃`
+         - Unicode Code Point: :code:`1 00000010 11000011`
+         - UTF-8 Encoding: :code:`11110000 10010000 10001011 10000011`
+
+.. admonition:: Example
+
+   =========== ============ =======
+    Character     Binary    Decimal
+   =========== ============ =======
+   ``H``       ``01001000`` ``72``
+   ``e``       ``01100101`` ``65``
+   ``l``       ``01101100`` ``108``
+   ``o``       ``01101111`` ``111``
+   ``U``       ``01010101`` ``85``
+   ``T``       ``01010100`` ``84``
+   ``F``       ``01000110`` ``70``
+   ``-``       ``00101101`` ``45``
+   ``8``       ``00111000`` ``56``
+   ``,``       ``00101100`` ``44``
+   ``!``       ``00100001`` ``33``
+   ``(space)`` ``00100000`` ``32``
+   =========== ============ =======
+
+   This is actually the exact same encoding as Ascii.
+   This is helpful for old text editors which may not support UTF-8 as they can still correctly display
+   common characters. However when you use characters such as: ★, you will get ``11100010 10011000 10000101`` in UTF-8.
+   This character is not compatible with ascii and may render as garbled text or break the system.
+
+   Putting this all together, we can make the string ``"Hello, UTF-8! ★"``.
+
+   ::
+
+      01001000 H
+      01100101 e
+      01101100 l
+      01101100 l
+      01101111 o
+      00101100 ,
+      00100000
+      01010101 U
+      01010100 T
+      01000110 F
+      00101101 -
+      00111000 8
+      00100001 !
+      00100000
+      11100010 ┐
+      10011000 ├ ★
+      10000101 ┘
+
+UTF-8 is one of the most used encoding for good reason. It is considered best for general purpose english.
+English text will almost always take up less space than foreign alphabets because of the variable-width encoding.
+
+UTF-16
+++++++
+UTF-16 is also a variable encoding. In UTF-16 a character can take up either 2 or 4 bytes. Any character between :math:`0 - 55,295` or
+:math:`57,344 - 65,535` is simply represented by its numerical value contained within two bytes.
+
+.. admonition:: Example
+
+   ========= =========== =====================
+   Character  Codepoint          UTF-16
+   ========= =========== =====================
+   ``&``     ``100110``  ``00000000 00100110``
+   ``A``     ``1000001`` ``00000000 01000001``
+   ``a``     ``1100001`` ``00000000 01100001``
+   ========= =========== =====================
+
+In the range of :math:`65,536 - 1,114,111` 4 bytes are used.
+
+.. admonition:: Example
+
+   ========= ====================== =======================================
+   Character        Codepoint                       UTF-16
+   ========= ====================== =======================================
+   ``🁤``     ``11111000001100100``  ``11011000 00111101 11011110 10000000``
+   ``🚀``     ``11111011010000000``  ``11011000 00111101 11011110 10000000``
+   ``🚁``     ``11111011010000001``  ``11011000 00111101 11011110 10000001``
+   ========= ====================== =======================================
+
+.. note::
+   To find the UTF-16 representation of a character in the range of :math:`65,536_{10} - 1,114,111_{10}` the following steps must be followed:
+
+      1. Subtract :math:`65,536_{10}` from the codepoint.
+      2. Convert to binary and add ``0``'s so that there are 20 bits
+      3. Take the first :math:`10_{10}` bits and add :math:`55,296_{10}`. This gives the first two bytes.
+      4. Take the remaining :math:`10_{10}` bits and add :math:`56,320_{10}`. This gives the remaining two bytes.
+
+   .. admonition:: Example
+
+      The character ``😎`` has a codepoint of :math:`128,526_{10}`:
+
+      1. :math:`128,526_{10} - 65,536_{10} = 62,990_{10}`
+      2. :math:`62,990_{10} = \color{red}{0000111101}\color{blue}{1000001110}_2`
+      3. :math:`\color{red}{0000111101}_2 + 55,296_{10} = \color{red}{11011000\ 00111101}_2`
+      4. :math:`\color{blue}{1000001110}_2 + 56,320_{10} = \color{blue}{11011100\ 00000000}_2`
+
+      The UTF-16 representation of the unicode character ``😎`` is: :math:`\color{red}{11011000\ 00111101}\ \color{blue}{11011100\ 00000000}`
+
+UTF-32
+++++++
+UTF-32 is different from UTF-16 and UTF-8 in the fact that it is not variable-width. It is instead fixed-width.
+Every character encoded with UTF-32 is exactly 32 bits (4 Bytes). This enables simplicity as it can just use the code points
+directly. No sign bits need to be set to inform the computer of the number of bytes as this number is static. The problem with this encoding
+is that it will always be the largest possible number of bytes and is not at all efficient. More efficient encodings are usually preferred.
+Using UTF-8 instead of UTF-32 could reduce the file size by up to 4x.
+
+.. admonition:: Example
+
+   =========== ========= =======================================
+    Character  Codepoint                 UTF-32
+   =========== ========= =======================================
+   ``H``       ``72``    ``00000000 00000000 00000000 00100000``
+   ``e``       ``101``   ``00000000 00000000 00000000 01100101``
+   ``l``       ``108``   ``00000000 00000000 00000000 01101100``
+   ``o``       ``111``   ``00000000 00000000 00000000 01101111``
+   ``U``       ``55``    ``00000000 00000000 00000000 00110111``
+   ``T``       ``84``    ``00000000 00000000 00000000 01010100``
+   ``F``       ``70``    ``00000000 00000000 00000000 01000110``
+   ``-``       ``45``    ``00000000 00000000 00000000 00101101``
+   ``3``       ``51``    ``00000000 00000000 00000000 00110011``
+   ``2``       ``50``    ``00000000 00000000 00000000 00110010``
+   ``,``       ``44``    ``00000000 00000000 00000000 00101100``
+   ``!``       ``33``    ``00000000 00000000 00000000 00100001``
+   ``(space)`` ``32``    ``00000000 00000000 00000000 00100000``
+   =========== ========= =======================================
+
+   "Hello, UTF-32!" encoded in UTF-32:
+
+   ::
+
+      00000000 00000000 00000000 00100000 H
+      00000000 00000000 00000000 01100101 e
+      00000000 00000000 00000000 01101100 l
+      00000000 00000000 00000000 01101100 l
+      00000000 00000000 00000000 01101111 o
+      00000000 00000000 00000000 00101100 ,
+      00000000 00000000 00000000 00100000
+      00000000 00000000 00000000 00110111 U
+      00000000 00000000 00000000 01010100 T
+      00000000 00000000 00000000 01000110 F
+      00000000 00000000 00000000 00101101 -
+      00000000 00000000 00000000 00110011 3
+      00000000 00000000 00000000 00110010 2
+      00000000 00000000 00000000 00100001 !
+
+
+Which Encoding Should I Use?
+++++++++++++++++++++++++++++
+The short answer to this question is UTF-8. UTF-8 is the most space efficient and
+is backwards compatible with Ascii (unlike UTF-16 or UTF-32).
+
+This table compares the encodings we have covered here:
+
+====== ========== =============== ============= ============
+ Name  Characters Variable Width? Smallest Size Biggest Size
+====== ========== =============== ============= ============
+Ascii  128        No              1 Byte        1 Bytes
+UTF-8  109,384    Yes             1 Byte        4 Bytes
+UTF-16 109,384    Yes             2 Bytes       4 Bytes
+UTF-32 109,384    No              4 Bytes       4 Bytes
+====== ========== =============== ============= ============
+
+Some of the reasons you might use a Encoding other than UTF-8 include:
+
+   * You need to be compatible with some system that for some reason is using something else.
+   * The encoding is more efficient with the text you are handling
+
+.. note::
+
+   Java and Windows both use UTF-16 as it is backwards compatible with UCS-2 (An early version of UTF-16),
+   which they both used before UTF-16 was developed.

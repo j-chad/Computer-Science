@@ -1,0 +1,252 @@
+========
+Encoding
+========
+
+Error Control
+=============
+One of the problems with computing is that data can be accidentally changed, lost or malformed.
+This can be caused by scratches on cd's, A damaged barcode, human error or wifi packets being dropped.
+It is very important that we are able to detect any loss or change in data, so that we don't use the incorrect data, which could
+prove to be a disaster (e.g. A Bank).
+
+.. note::
+
+   There are two types of errors:
+      * Single bit
+      * Burst
+
+   | A single bit error occurs when one bit of data is changed.
+   | A burst error is when more than one bit of data is changed.
+
+
+Parity Bits
+-----------
+One of the techniques to detect a change in data is called a parity bit.
+This is the simplest error control technique and is simply a bit added on to the data which represents whether
+the data has an even amount of ``1``\'s.
+
++---------------------------+------------+--------+
+|            Data           | Parity Bit | Valid? |
++===+===+===+===+===+===+===+============+========+
+| 1 | 0 | 0 | 1 | 0 | 0 | 0 |      0     |   Yes  |
++---+---+---+---+---+---+---+------------+--------+
+
+Because there are 2 ``1``'s the parity bit is set to 0. If it was an "odd parity bit" it would instead be set to ``0``.
+
+.. note::
+
+   It does not matter if the parity bit is even or odd,
+   as long as all systems that will use the data use the same system.
+
+If a single bit error occurs:
+
++---------------------------+------------+-------+
+|            Data           | Parity Bit | Valid |
++===+===+===+===+===+===+===+============+=======+
+| 1 | 0 | 0 | 1 | 0 | 1 | 0 |      0     |   No  |
++---+---+---+---+---+---+---+------------+-------+
+
+We know that the data is incorrect as the parity bit does not match.
+This still works even if the parity bit is switched.
+
+A parity bit however, can not tell if the data was modified an even number of times.
+If the data above is changed once again, the parity bit will be correct although the data will be different.
+
++---------------------------+------------+-------+
+|            Data           | Parity Bit | Valid |
++===+===+===+===+===+===+===+============+=======+
+| 1 | 0 | 1 | 1 | 0 | 1 | 0 |      0     |  Yes  |
++---+---+---+---+---+---+---+------------+-------+
+
+A slightly more advanced version of this is called "Two dimensional Parity".
+In two dimensional parity, data is split up into groups and a parity bit is added to each.
+
++---------------------------+--------+
+| Data                      | Parity |
++===+===+===+===+===+===+===+========+
+| 1 | 0 | 1 | 1 | 0 | 1 | 0 | 0      |
++---+---+---+---+---+---+---+--------+
+| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1      |
++---+---+---+---+---+---+---+--------+
+| 1 | 1 | 0 | 1 | 0 | 0 | 1 | 0      |
++---+---+---+---+---+---+---+--------+
+| 0 | 1 | 0 | 0 | 1 | 1 | 0 | 1      |
++---+---+---+---+---+---+---+--------+
+
+We then add the second dimension by appending another group,
+which contains the parity for the rows.
+
++------------+---------------------------+--------+
+|            | Data                      | Parity |
++============+===+===+===+===+===+===+===+========+
+| **Data**   | 1 | 0 | 1 | 1 | 0 | 1 | 0 | 0      |
++            +---+---+---+---+---+---+---+--------+
+|            | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1      |
++            +---+---+---+---+---+---+---+--------+
+|            | 1 | 1 | 0 | 1 | 0 | 0 | 1 | 0      |
++------------+---+---+---+---+---+---+---+--------+
+| **Parity** | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 1      |
++------------+---+---+---+---+---+---+---+--------+
+
+.. note::
+   The bottom right hand corner can be based off of its column or row,
+   they should have the same value.
+
+This is a much more effective technique to apply parity than using single dimensional parity and will detect burst errors.
+Two dimensional parity means that you would have to flip 4 or more bits in order for a change to go unnoticed.
+If a single bit error occurs, the data can be recovered. The main problem with two dimensional parity is the amount of extra data that
+needs to be transmitted. For each piece of data you need to send the parity bits will take up :math:`x+y+1` bits (where :math:`x` is the group size, and :math:`y` is the number of groups)
+
+Checksum
+--------
+A checksum is a number which is derived from the input data. If the data is modified, then the checksum will return a completely new number.
+When the data is received, the checksum is recalculated. If the checksum is different from the previously calculated checksum then there must be an error.
+
+.. admonition:: Example
+
+   Using a simple "Modular Sum Checksum"
+
+   1. Break the data up into groups of :math:`n` bits
+   2. Add all groups together
+   3. Discard bits so that there are :math:`n` bits
+   4. Get the two's compliment of the sum
+
+   If we have the data::
+
+      01010100
+      11010010
+      10100100
+      11001010
+      10010010
+
+   1. Split the data into groups of 8 (already done)
+   2. Add all groups together
+
+   .. math::
+
+      \frac{
+            \begin{array}[b]{r}
+               01010100\\
+               11010010\\
+               10100100\\
+               11001010\\
+               10010010
+            \end{array}
+         }{
+            1100100110
+         }
+
+   3. Discard bits
+
+      :math:`11001001`
+
+   4. Calculate two's compliment
+
+      :math:`00110111`
+
+   The checksum for the above data is: :math:`00110111`
+
+
+Encryption
+==========
+Encryption is a way to secure your data using math to return unreadable text to people who do not know the "password".
+
+.. note::
+   Data which has been encrypted is known as "**cipher text**",
+   and data which hasn't been encrypted is referred to as "**plain text**".
+   A **key** is the data needed to encrypt or decrypt data (e.g. password).
+
+Symmetric Encryption
+--------------------
+Encryption techniques use the concept of "**private keys**". These are kept secret and
+are the only way to "unlock" the data. The key is used to generate the secret and also to unlock it.
+symmetric encryption is sometimes referred to as "**private key encryption**".
+
+An early example of symmetric encryption is the "Caesar Cipher".
+
+Caesar Cipher
++++++++++++++
+This cipher is probably well known to most people. It substitutes letters for others in the alphabet by shifting the letters.
+The key for a Caesar Cipher is the number of letters that you shift the alphabet by.
+
+.. admonition:: Example
+
+   Caesar cipher with a key of ``3``
+
+   +---+---+---+---+---+---+---+---+
+   | A | B | C | D | E | F | G | H |
+   +===+===+===+===+===+===+===+===+
+   | X | Y | Z | A | B | C | D | E |
+   +---+---+---+---+---+---+---+---+
+
+   .. note::
+      Only the first 8 letters are shown
+      for the sake of brevity
+
+To encrypt text with this data, we simply substitute each letter with the letter :math:`n` further in the alphabet.
+
+.. admonition:: Example
+
+   To encrypt the text: "``wow, so secure!``" with a key of ``3``, we start with
+   the letter ``w`` and find the letter ``3`` ahead of it: "`z`". we then repeat this for all the letters
+   until we end up with "``zrz, vr vhfxuh!``". To decrypt it we simply go back 3 letters in the alphabet for each letter.
+
+This is a very insecure algorithm for various reasons:
+
+   * There are only 26 possible keys. The encryption could be broken by simply trying each key and seeing if it makes sense.
+     Really good encryption algorithms will have infinite, or enough keys for it not to matter.
+
+   * Some information can still be gathered from the cipher text. Word count, letter frequency (even if you can't tell what letter) and
+     the length of each word can be found with no work.
+
+   * Because the letters are merely substituted, it is vulnerable to an attack known as **frequency analysis**.
+     This is essentially taking the most common english letters: ``e``, ``t``, ``a``, ``o`` and ``i``. Then counting the frequency of
+     letters in the encrypted text. It is likely that the most frequent letter will be one of these. This narrows the possible keys down from an already small number
+     to a very very small number.
+
+Modern Symmetric Encryption Algorithms
+++++++++++++++++++++++++++++++++++++++
+A caesar cipher is not secure enough to keep any of our data secret.
+This probably has something to do with it being invented circa 50 B.C.
+Since then, billions of new encryption algorithms have been developed.
+Some of the most common modern private key encryption algorithms are:
+
+   * AES
+   * Blowfish
+   * IDEA
+   * Triple DES
+
+The most common and best (so far), is **AES** (Advanced Encryption Standard).
+
+The Problem With Symmetric Encryption
++++++++++++++++++++++++++++++++++++++
+There is one fundamental flaw with using a single key for both encrypting and decrypting.
+In order for two devices to communicate, they must first exchange and agree on a key to use.
+This initial communication must use plain text which can be intercepted. An attacker can then see all the data being sent.
+
+Asymmetric Encryption
+---------------------
+This form of encryption aims to solve the problem of the beginning insecure key exchange. Instead of having a single key which must be kept private,
+we use two keys: a private key **and** a public key. The public key is sent out and made available to everyone, while the private key is kept... private.
+Asymmetric encryption algorithms have a special relationship between these keys. The public key **can encrypt* but **can not decrypt**. The private key is the opposite and can only **decrypt**.
+
+.. note::
+   This relationship between keys leads to another handy property of asymmetric encryption. To verify that the message is from the correct person,
+   the sender can "**sign**" the message with their private key. This can then be verified by the receiver by using the senders **public** key.
+
+Some popular asymmetric encryption algorithms include:
+
+   * RSA
+   * DSA
+   * Diffie-Hellman Key Exchange
+
+Asymmetric Or Symmetrical Encryption?
+-------------------------------------
+The type of encryption you use is dependant on the use case.
+Asymmetrical encryption is extremely useful in messaging applications where the data must be secure,
+while symmetrical encryption is much better suited for applications where the data doesnt need to be sent to other people.
+There also exists types of **hybrid** encryption where both symmetric and asymmetric algorithms are blended to improve both.
+
+
+Compression
+===========

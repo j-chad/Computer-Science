@@ -1,0 +1,880 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Data Representation &#8212; AS 91371  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Encoding" href="encoding.html" />
+    <link rel="prev" title="AS 91371" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="data-representation">
+<h1>Data Representation<a class="headerlink" href="#data-representation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="binary-it-s-as-easy-as-01-10-11">
+<h2><strong>Binary</strong> - It’s as easy as 01, 10, 11<a class="headerlink" href="#binary-it-s-as-easy-as-01-10-11" title="Permalink to this headline">¶</a></h2>
+<p>Since computers cannot store information in the same way that humans can,
+they must store them using a number system called Binary. Binary is a <code class="docutils literal"><span class="pre">base</span> <span class="pre">2</span></code> number system. This means it only has two values,
+represented with a <span class="math">\(1\)</span> or a <span class="math">\(0\)</span>. The decimal system that we are used to is a <cite>base 10</cite> system and has <span class="math">\(10\)</span> values (<span class="math">\(0-9\)</span>).
+Computers represent all data in binary, with a high voltage representing a <code class="docutils literal"><span class="pre">1</span></code> and a low voltage representing a <code class="docutils literal"><span class="pre">0</span></code>. Binary can also be stored as any other variable with two states,
+such as the black and white in a barcode.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The base of a number will be shown in subscript</p>
+<p class="last">e.g. <span class="math">\(01001_2\)</span> Binary or <span class="math">\(9_{10}\)</span> Decimal</p>
+</div>
+<div class="line-block">
+<div class="line">Decimal numbers can be split into columns:</div>
+<div class="line"><span class="math">\(156_{10} = 1 \times 10^2 + 5 \times 10^1 + 6 \times 10^0\)</span></div>
+</div>
+<div class="line-block">
+<div class="line">Binary numbers work exactly the same, but with a base of 2:</div>
+<div class="line"><span class="math">\(156_{10} = 1 \times 2^7 + 0 \times 2^6 + 0 \times 2^5 + 1 \times 2^4 + 1 \times 2^3 + 1 \times 2^2 + 0 \times 2^1 + 0 \times 2^0\)</span></div>
+<div class="line">So therefore the binary representation of the number <span class="math">\(156_{10}\)</span> is <span class="math">\(100111010_2\)</span></div>
+</div>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p>If you wanted to convert the number <span class="math">\(531_{10}\)</span> to binary:</p>
+<div class="last line-block">
+<div class="line"><span class="math">\(531_{10} = 2^9 + 2^4 + 2^1 + 2^0\)</span></div>
+<div class="line">so <span class="math">\(531_{10} = 1000010011_2\)</span></div>
+</div>
+</div>
+<div class="section" id="bits-and-bytes-and-everything-nice">
+<h3><strong>Bits</strong> and <strong>Bytes</strong>, And Everything Nice<a class="headerlink" href="#bits-and-bytes-and-everything-nice" title="Permalink to this headline">¶</a></h3>
+<p>“Bit” stands for binary digit. A bit can be high voltage (1), or it can be low voltage (0).
+A whole lot of bits will make a number. 8 bits is equal to a byte.</p>
+<p>A byte can hold a maximum value of 255 and a minimum of 0:</p>
+<div class="math">
+\[ \begin{align}\begin{aligned}\begin{split}11111111_2 &amp;= 1 \times 2^7 + 1 \times 2^6 + 1 \times 2^5 + 1 \times 2^4 + 1 \times 2^3 + 1 \times 2^2 + 1 \times 2^1 + 1 \times 2^0 \\
+           &amp;= 255\end{split}\\\begin{split}00000000_2 &amp; = 0 \times 2^7 + 0 \times 2^6 + 1 \times 2^5 + 0 \times 2^4 + 0 \times 2^3 + 0 \times 2^2 + 0 \times 2^1 + 0 \times 2^0 \\
+           &amp; = 0\end{split}\end{aligned}\end{align} \]</div>
+</div>
+</div>
+<div class="section" id="safety-in-numbers">
+<h2>Safety In <strong>Numbers</strong><a class="headerlink" href="#safety-in-numbers" title="Permalink to this headline">¶</a></h2>
+<p>So far we’ve seen how to represent positive integers, but we cannot represent negative integers.</p>
+<div class="section" id="sign-bits">
+<h3>Sign Bits<a class="headerlink" href="#sign-bits" title="Permalink to this headline">¶</a></h3>
+<p>A simple way to add in negative numbers would be to use a simple sign bit.
+This means that instead of using all 8 bits of a byte for the number, we only use
+7 and reserve the last bit to represent either a positive number (0) or a negative number (1).</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<div class="last math">
+\[\begin{split}7  &amp;= 00000111_2\\
+-7 &amp;= 10000111_2\end{split}\]</div>
+</div>
+<p>This is a very simple way to represent numbers, and it comes with a few flaws.
+The number <span class="math">\(10000000_2 (-0_{10})\)</span> is different to the number <span class="math">\(00000000_2 (+0_{10})\)</span> in this system,
+even though it is actually the same number. The sign bit does not work so well when we
+attempt to perform arithmetic on it and leads to some confusing maths.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p>Shown is the same numbers being added, both in decimal and binary.
+We use the binary addition algorithm to add the binary.
+This means we follow the following rules:</p>
+<dl class="docutils">
+<dt>For each column:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">0,</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">1</span></code></li>
+<li><code class="docutils literal"><span class="pre">0,</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">0</span></code></li>
+<li><code class="docutils literal"><span class="pre">1,</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">10</span></code> (The 1 is carried)</li>
+</ul>
+</dd>
+</dl>
+<div class="math">
+\[\begin{split}\begin{align}
+   \frac{
+      \begin{array}[b]{r}
+         00100010_2\\
+         10001100_2
+      \end{array}
+   }{
+      10101110_2
+   }
+   &amp;&amp;
+   \frac{
+      \begin{array}[b]{r}
+         34_{10}\\
+         -12_{10}
+      \end{array}
+   }{
+      22
+   }
+\end{align}\end{split}\]</div>
+<p class="last">If we now convert the binary number back to decimal with the sign bit,
+we now get an answer of <span class="math">\(-46_{10}\)</span> <strong>not</strong> <span class="math">\(22_{10}\)</span></p>
+</div>
+</div>
+<div class="section" id="a-better-way">
+<h3>A Better Way!<a class="headerlink" href="#a-better-way" title="Permalink to this headline">¶</a></h3>
+<p>If we think about decimal numbers, when we add together two opposite numbers
+such as <span class="math">\(-5\)</span> and <span class="math">\(5\)</span> they equal <span class="math">\(0\)</span>. It turns out the same can be
+true for binary numbers. This method is called <strong>Two’s compliment</strong>.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p>The negative of <span class="math">\(12\)</span> is <span class="math">\(-12\)</span>.
+Together they add to <span class="math">\(0\)</span>.</p>
+<p>The binary representation of <span class="math">\(12\)</span> is <span class="math">\(00000111\)</span></p>
+<div class="last math">
+\[\begin{split}\frac{
+   \begin{array}[b]{r}
+        00000111\\
+      + ????????
+   \end{array}
+}{
+   00000000
+}\end{split}\]</div>
+</div>
+<p>It turns out that to find the negative of a binary number using two’s compliment, we simply flip all the bits and add 1.
+So all <cite>0</cite>’s become <cite>1</cite>’s and all <cite>1</cite>’s become <cite>0</cite>’s and 00000001 is added.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<dl class="docutils">
+<dt>To find -12 in binary:</dt>
+<dd><ol class="first last arabic simple">
+<li>Flip all the bits: <cite>00000111</cite> becomes <cite>11111000</cite></li>
+<li>Add <cite>1</cite>: <cite>11111000</cite> becomes <cite>11111001</cite></li>
+</ol>
+</dd>
+</dl>
+<p class="last"><span class="math">\(-12 = 11111001\)</span></p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>This technique to find the two’s compliment for a number, works with some clever tricks.
+By adding the reflected number to the original number, it creates a pattern of <cite>1</cite>’s. Because it must equal <cite>0</cite>, not <cite>1</cite>
+we simply add <cite>1</cite> to it, so that it is equal to <cite>0</cite></p>
+<div class="admonition-example last admonition">
+<p class="first admonition-title">Example</p>
+<div class="math">
+\[\begin{split}\frac{
+   \begin{array}[b]{r}
+        00000111\\
+      + ????????
+   \end{array}
+}{
+   00000000
+}\end{split}\]</div>
+<div class="math">
+\[\begin{split}\frac{
+   \begin{array}[b]{r}
+        00000111\\
+      + 11111000
+   \end{array}
+}{
+   11111111
+}\end{split}\]</div>
+<div class="math">
+\[\begin{split}\frac{
+   \begin{array}[b]{r}
+        00000111\\
+      + 11111001
+   \end{array}
+}{
+   (1)00000000
+}\end{split}\]</div>
+<p class="last">The carried 1 is lost as the number must remain within a certain size (1 byte in this example).</p>
+</div>
+</div>
+<p>A negative binary integer using this technique will work with addition without any additional math.
+This also means subtraction is easy, as you can simply convert the second integer into a compliment and perform addition.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p class="last"><span class="math">\(-12_10 = 11111001_2\)</span></p>
+</div>
+</div>
+<div class="section" id="hexadecimal">
+<h3>Hexadecimal<a class="headerlink" href="#hexadecimal" title="Permalink to this headline">¶</a></h3>
+<p>Humans find it very hard to read and understand long number sequences in binary</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p>Try reading this:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="mi">00000011</span> <span class="mi">01001111</span> <span class="mi">01100010</span>
+<span class="mi">10011010</span> <span class="mi">10111011</span> <span class="mi">11011010</span>
+<span class="mi">11001101</span> <span class="mi">01010100</span> <span class="mi">00101100</span>
+<span class="mi">10001001</span> <span class="mi">01001000</span> <span class="mi">10111010</span>
+<span class="mi">01001111</span> <span class="mi">10010011</span> <span class="mi">11111010</span>
+<span class="mi">01111111</span> <span class="mi">10011000</span> <span class="mi">00010010</span>
+<span class="mi">10110100</span> <span class="mi">11101101</span> <span class="mi">10000101</span>
+<span class="mi">00110000</span> <span class="mi">10100011</span> <span class="mi">10110110</span>
+<span class="mi">11100001</span> <span class="mi">01010000</span> <span class="mi">00011110</span>
+<span class="mi">10101011</span> <span class="mi">10010011</span> <span class="mi">10010001</span>
+<span class="mi">01011000</span> <span class="mi">10001010</span> <span class="mi">01010011</span>
+<span class="mi">11100111</span> <span class="mi">01010111</span> <span class="mi">00001010</span>
+<span class="mi">10110110</span> <span class="mi">01111100</span> <span class="mi">10011100</span>
+<span class="mi">00101110</span> <span class="mi">00011010</span> <span class="mi">11110000</span>
+<span class="mi">00101100</span> <span class="mi">01011110</span> <span class="mi">01010001</span>
+<span class="mi">11110011</span> <span class="mi">11000111</span> <span class="mi">00101111</span>
+</pre></div>
+</div>
+</div>
+<p>To make it easier for us to read and understand, we use another number system named <strong>Hexadecimal</strong>.
+Hexadecimal is a <strong>base 16</strong> number system. This means that it has 16 symbols to represent numbers.
+We use the numbers 0-9 and the letters A-F as these symbols.</p>
+<p>To convert between binary and hexadecimal:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Starting from the right, split the bits up into “half-bytes” (groups of 4)</li>
+<li>Pad the leftmost group with <code class="docutils literal"><span class="pre">0</span></code>’s so that it has 4 bits</li>
+<li>Convert each group into decimal</li>
+<li>If the decimal number is bigger than 9, replace with “A” (10), “B” (11), “C” (12), “D” (13), “E” (14) or “F” (15).</li>
+</ol>
+</div></blockquote>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p>To convert the first 3 bytes of the above binary:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="mi">0000</span> <span class="mi">0011</span> <span class="mi">0100</span> <span class="mi">1111</span> <span class="mi">0110</span> <span class="mi">0010</span>
+<span class="mf">2.</span> <span class="n">Left</span><span class="o">-</span><span class="n">most</span> <span class="n">group</span> <span class="n">already</span> <span class="n">has</span> <span class="mi">4</span> <span class="n">bits</span>
+<span class="mf">3.</span> <span class="mi">0</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">15</span> <span class="mi">6</span> <span class="mi">2</span>
+<span class="mf">4.</span> <span class="mi">0</span> <span class="mi">3</span> <span class="mi">4</span> <span class="n">F</span> <span class="mi">6</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="no-strings-attached">
+<h2>No <strong>Strings</strong> Attached<a class="headerlink" href="#no-strings-attached" title="Permalink to this headline">¶</a></h2>
+<p>In order for a computer to store text, it must still use the binary system. Computers achieve this with the use
+of character encodings. Character encodings map a letter or symbol to a number which can be stored in the computer.</p>
+<div class="section" id="ascii">
+<h3>Ascii<a class="headerlink" href="#ascii" title="Permalink to this headline">¶</a></h3>
+<p>Ascii is one of the first character encodings and contains the english alphabet and some extra characters.
+Ascii is an old encoding and is very rarely used anymore. Ascii contains 127 characters and can only be used for
+english text. This is a fixed width encoding, the number for each character will always take up a byte (8 bits).</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p>In ascii the following characters assign to the following binary numbers</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="43%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Character</th>
+<th class="head">Binary</th>
+<th class="head">Decimal</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">H</span></code></td>
+<td><code class="docutils literal"><span class="pre">01001000</span></code></td>
+<td><code class="docutils literal"><span class="pre">72</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">e</span></code></td>
+<td><code class="docutils literal"><span class="pre">01100101</span></code></td>
+<td><code class="docutils literal"><span class="pre">65</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">l</span></code></td>
+<td><code class="docutils literal"><span class="pre">01101100</span></code></td>
+<td><code class="docutils literal"><span class="pre">108</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">o</span></code></td>
+<td><code class="docutils literal"><span class="pre">01101111</span></code></td>
+<td><code class="docutils literal"><span class="pre">111</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">A</span></code></td>
+<td><code class="docutils literal"><span class="pre">01000001</span></code></td>
+<td><code class="docutils literal"><span class="pre">65</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">s</span></code></td>
+<td><code class="docutils literal"><span class="pre">01110011</span></code></td>
+<td><code class="docutils literal"><span class="pre">115</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">c</span></code></td>
+<td><code class="docutils literal"><span class="pre">01100011</span></code></td>
+<td><code class="docutils literal"><span class="pre">99</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">i</span></code></td>
+<td><code class="docutils literal"><span class="pre">01101001</span></code></td>
+<td><code class="docutils literal"><span class="pre">105</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">,</span></code></td>
+<td><code class="docutils literal"><span class="pre">00101100</span></code></td>
+<td><code class="docutils literal"><span class="pre">44</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">!</span></code></td>
+<td><code class="docutils literal"><span class="pre">00100001</span></code></td>
+<td><code class="docutils literal"><span class="pre">33</span></code></td>
+</tr>
+<tr class="row-even"><td>(space)</td>
+<td><code class="docutils literal"><span class="pre">00100000</span></code></td>
+<td><code class="docutils literal"><span class="pre">32</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>So the sentence: <code class="docutils literal"><span class="pre">&quot;Hello,</span> <span class="pre">Ascii!&quot;</span></code> becomes:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span>01001000 H
+01100101 e
+01101100 l
+01101100 l
+01101111 o
+00101100 ,
+00100000
+01000001 A
+01110011 s
+01100011 c
+01101001 i
+01101001 i
+00100001 !
+</pre></div>
+</div>
+</div>
+<p>Ascii takes up a small amount of space due to each character only taking a byte.
+However this means that there is a very restrictive character set.
+All text written must be using the english language. This can lead to problems when we
+want to write in languages that use a different character set.</p>
+</div>
+<div class="section" id="enter-unicode">
+<h3>Enter Unicode ★<a class="headerlink" href="#enter-unicode" title="Permalink to this headline">¶</a></h3>
+<p>Unicode is an encoding <strong>standard</strong> which contains almost
+every possible symbol or character you could ever dream of. Unlike Ascii, which has 127
+Characters, Unicode defines <span class="math">\(109,384\)</span> characters and has space for <span class="math">\(1,002,614\)</span> more characters.
+This is a total of <span class="math">\(1,111,998\)</span> possible characters. That’s a lot of characters, and is probably more than we
+will ever need.</p>
+<p>Unicode is however, not a character encoding and it cannot directly represent strings.
+It is simply a standard table of which numbers map to which characters, known as code points.
+All unicode encodings must use these code points when deciding what number relates to which character.
+But it is up to the encoding to decide how to implement these numbers.
+The most popular unicode encodings are:</p>
+<ul class="simple">
+<li>UTF-8</li>
+<li>UTF-16</li>
+<li>UTF-32</li>
+</ul>
+<p>Each encoding has pros and cons and some are better for different use cases.</p>
+<div class="section" id="utf-8">
+<h4>UTF-8<a class="headerlink" href="#utf-8" title="Permalink to this headline">¶</a></h4>
+<p>This is probably the most popular of the encodings. It is a variable-width encoding, which
+means that the number of bytes taken up by a character can change depending on the character.
+This causes the most commonly used characters to take up much less space than more foreign characters such as: <code class="code docutils literal"><span class="pre">〶</span> <span class="pre">(postal</span> <span class="pre">mark)</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>UTF-8 achieves variable-width encoding by using the top bits of bytes to store the number of bytes.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>1 Byte (0 - 127)</dt>
+<dd><ul class="first last">
+<li>The byte must start with <cite>0</cite> denoting that it is the only byte</li>
+<li>This leaves 7 bits for the character</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>2 Bytes (128 - 2,047)</dt>
+<dd><ul class="first last">
+<li>The first byte starts with 110</li>
+<li>This leaves 11 bits for the character</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>3 Bytes (2,047 - 65,535)</dt>
+<dd><ul class="first last">
+<li>The first byte starts with 1110</li>
+<li>This leaves 16 bits for the character</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>4 Bytes (65,536 - 1,114,111)</dt>
+<dd><ul class="first last">
+<li>The first byte starts with 11110</li>
+<li>This leaves 21 bits for the character</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Additionally, all bytes after the first byte (except in a single byte character for obvious reasons) start with 10.
+This is so that if you have a loss of data, you can still tell that it is not the start of a character (which could ruin all of the text).</p>
+<div class="admonition-example last admonition">
+<p class="first admonition-title">Example</p>
+<ul class="last simple">
+<li><dl class="first docutils">
+<dt>1 Byte Character: <code class="code docutils literal"><span class="pre">A</span></code></dt>
+<dd><ul class="first last">
+<li>Unicode Code Point: <code class="code docutils literal"><span class="pre">01000001</span></code></li>
+<li>UTF-8 Encoding: <code class="code docutils literal"><span class="pre">01000001</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>2 Byte Character: <code class="code docutils literal"><span class="pre">©</span></code></dt>
+<dd><ul class="first last">
+<li>Unicode Code Point: <code class="code docutils literal"><span class="pre">10101001</span></code></li>
+<li>UTF-8 Encoding: <code class="code docutils literal"><span class="pre">11000010</span> <span class="pre">10101001</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>3 Byte Character: <code class="code docutils literal"><span class="pre">ࢯ</span></code></dt>
+<dd><ul class="first last">
+<li>Unicode Code Point: <code class="code docutils literal"><span class="pre">‭1000</span> <span class="pre">10101111‬</span></code></li>
+<li>UTF-8 Encoding: <code class="code docutils literal"><span class="pre">11100000</span> <span class="pre">10100010</span> <span class="pre">10101111</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>4 Byte Character: <code class="code docutils literal"><span class="pre">𐋃</span></code></dt>
+<dd><ul class="first last">
+<li>Unicode Code Point: <code class="code docutils literal"><span class="pre">1</span> <span class="pre">00000010</span> <span class="pre">11000011</span></code></li>
+<li>UTF-8 Encoding: <code class="code docutils literal"><span class="pre">11110000</span> <span class="pre">10010000</span> <span class="pre">10001011</span> <span class="pre">10000011</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="40%" />
+<col width="23%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Character</th>
+<th class="head">Binary</th>
+<th class="head">Decimal</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">H</span></code></td>
+<td><code class="docutils literal"><span class="pre">01001000</span></code></td>
+<td><code class="docutils literal"><span class="pre">72</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">e</span></code></td>
+<td><code class="docutils literal"><span class="pre">01100101</span></code></td>
+<td><code class="docutils literal"><span class="pre">65</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">l</span></code></td>
+<td><code class="docutils literal"><span class="pre">01101100</span></code></td>
+<td><code class="docutils literal"><span class="pre">108</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">o</span></code></td>
+<td><code class="docutils literal"><span class="pre">01101111</span></code></td>
+<td><code class="docutils literal"><span class="pre">111</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">U</span></code></td>
+<td><code class="docutils literal"><span class="pre">01010101</span></code></td>
+<td><code class="docutils literal"><span class="pre">85</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">T</span></code></td>
+<td><code class="docutils literal"><span class="pre">01010100</span></code></td>
+<td><code class="docutils literal"><span class="pre">84</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">F</span></code></td>
+<td><code class="docutils literal"><span class="pre">01000110</span></code></td>
+<td><code class="docutils literal"><span class="pre">70</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">-</span></code></td>
+<td><code class="docutils literal"><span class="pre">00101101</span></code></td>
+<td><code class="docutils literal"><span class="pre">45</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">8</span></code></td>
+<td><code class="docutils literal"><span class="pre">00111000</span></code></td>
+<td><code class="docutils literal"><span class="pre">56</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">,</span></code></td>
+<td><code class="docutils literal"><span class="pre">00101100</span></code></td>
+<td><code class="docutils literal"><span class="pre">44</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">!</span></code></td>
+<td><code class="docutils literal"><span class="pre">00100001</span></code></td>
+<td><code class="docutils literal"><span class="pre">33</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">(space)</span></code></td>
+<td><code class="docutils literal"><span class="pre">00100000</span></code></td>
+<td><code class="docutils literal"><span class="pre">32</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>This is actually the exact same encoding as Ascii.
+This is helpful for old text editors which may not support UTF-8 as they can still correctly display
+common characters. However when you use characters such as: ★, you will get <code class="docutils literal"><span class="pre">11100010</span> <span class="pre">10011000</span> <span class="pre">10000101</span></code> in UTF-8.
+This character is not compatible with ascii and may render as garbled text or break the system.</p>
+<p>Putting this all together, we can make the string <code class="docutils literal"><span class="pre">&quot;Hello,</span> <span class="pre">UTF-8!</span> <span class="pre">★&quot;</span></code>.</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span>01001000 H
+01100101 e
+01101100 l
+01101100 l
+01101111 o
+00101100 ,
+00100000
+01010101 U
+01010100 T
+01000110 F
+00101101 -
+00111000 8
+00100001 !
+00100000
+11100010 ┐
+10011000 ├ ★
+10000101 ┘
+</pre></div>
+</div>
+</div>
+<p>UTF-8 is one of the most used encoding for good reason. It is considered best for general purpose english.
+English text will almost always take up less space than foreign alphabets because of the variable-width encoding.</p>
+</div>
+<div class="section" id="utf-16">
+<h4>UTF-16<a class="headerlink" href="#utf-16" title="Permalink to this headline">¶</a></h4>
+<p>UTF-16 is also a variable encoding. In UTF-16 a character can take up either 2 or 4 bytes. Any character between <span class="math">\(0 - 55,295\)</span> or
+<span class="math">\(57,344 - 65,535\)</span> is simply represented by its numerical value contained within two bytes.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="22%" />
+<col width="27%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Character</th>
+<th class="head">Codepoint</th>
+<th class="head">UTF-16</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&amp;</span></code></td>
+<td><code class="docutils literal"><span class="pre">100110</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00100110</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">A</span></code></td>
+<td><code class="docutils literal"><span class="pre">1000001</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">01000001</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">a</span></code></td>
+<td><code class="docutils literal"><span class="pre">1100001</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">01100001</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In the range of <span class="math">\(65,536 - 1,114,111\)</span> 4 bytes are used.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="13%" />
+<col width="31%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Character</th>
+<th class="head">Codepoint</th>
+<th class="head">UTF-16</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">🁤</span></code></td>
+<td><code class="docutils literal"><span class="pre">11111000001100100</span></code></td>
+<td><code class="docutils literal"><span class="pre">11011000</span> <span class="pre">00111101</span> <span class="pre">11011110</span> <span class="pre">10000000</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">🚀</span></code></td>
+<td><code class="docutils literal"><span class="pre">11111011010000000</span></code></td>
+<td><code class="docutils literal"><span class="pre">11011000</span> <span class="pre">00111101</span> <span class="pre">11011110</span> <span class="pre">10000000</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">🚁</span></code></td>
+<td><code class="docutils literal"><span class="pre">11111011010000001</span></code></td>
+<td><code class="docutils literal"><span class="pre">11011000</span> <span class="pre">00111101</span> <span class="pre">11011110</span> <span class="pre">10000001</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>To find the UTF-16 representation of a character in the range of <span class="math">\(65,536_{10} - 1,114,111_{10}\)</span> the following steps must be followed:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Subtract <span class="math">\(65,536_{10}\)</span> from the codepoint.</li>
+<li>Convert to binary and add <code class="docutils literal"><span class="pre">0</span></code>’s so that there are 20 bits</li>
+<li>Take the first <span class="math">\(10_{10}\)</span> bits and add <span class="math">\(55,296_{10}\)</span>. This gives the first two bytes.</li>
+<li>Take the remaining <span class="math">\(10_{10}\)</span> bits and add <span class="math">\(56,320_{10}\)</span>. This gives the remaining two bytes.</li>
+</ol>
+</div></blockquote>
+<div class="admonition-example last admonition">
+<p class="first admonition-title">Example</p>
+<p>The character <code class="docutils literal"><span class="pre">😎</span></code> has a codepoint of <span class="math">\(128,526_{10}\)</span>:</p>
+<ol class="arabic simple">
+<li><span class="math">\(128,526_{10} - 65,536_{10} = 62,990_{10}\)</span></li>
+<li><span class="math">\(62,990_{10} = \color{red}{0000111101}\color{blue}{1000001110}_2\)</span></li>
+<li><span class="math">\(\color{red}{0000111101}_2 + 55,296_{10} = \color{red}{11011000\ 00111101}_2\)</span></li>
+<li><span class="math">\(\color{blue}{1000001110}_2 + 56,320_{10} = \color{blue}{11011100\ 00000000}_2\)</span></li>
+</ol>
+<p class="last">The UTF-16 representation of the unicode character <code class="docutils literal"><span class="pre">😎</span></code> is: <span class="math">\(\color{red}{11011000\ 00111101}\ \color{blue}{11011100\ 00000000}\)</span></p>
+</div>
+</div>
+</div>
+<div class="section" id="utf-32">
+<h4>UTF-32<a class="headerlink" href="#utf-32" title="Permalink to this headline">¶</a></h4>
+<p>UTF-32 is different from UTF-16 and UTF-8 in the fact that it is not variable-width. It is instead fixed-width.
+Every character encoded with UTF-32 is exactly 32 bits (4 Bytes). This enables simplicity as it can just use the code points
+directly. No sign bits need to be set to inform the computer of the number of bytes as this number is static. The problem with this encoding
+is that it will always be the largest possible number of bytes and is not at all efficient. More efficient encodings are usually preferred.
+Using UTF-8 instead of UTF-32 could reduce the file size by up to 4x.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="15%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Character</th>
+<th class="head">Codepoint</th>
+<th class="head">UTF-32</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">H</span></code></td>
+<td><code class="docutils literal"><span class="pre">72</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00100000</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">e</span></code></td>
+<td><code class="docutils literal"><span class="pre">101</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">01100101</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">l</span></code></td>
+<td><code class="docutils literal"><span class="pre">108</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">01101100</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">o</span></code></td>
+<td><code class="docutils literal"><span class="pre">111</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">01101111</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">U</span></code></td>
+<td><code class="docutils literal"><span class="pre">55</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00110111</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">T</span></code></td>
+<td><code class="docutils literal"><span class="pre">84</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">01010100</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">F</span></code></td>
+<td><code class="docutils literal"><span class="pre">70</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">01000110</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">-</span></code></td>
+<td><code class="docutils literal"><span class="pre">45</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00101101</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">3</span></code></td>
+<td><code class="docutils literal"><span class="pre">51</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00110011</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">2</span></code></td>
+<td><code class="docutils literal"><span class="pre">50</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00110010</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">,</span></code></td>
+<td><code class="docutils literal"><span class="pre">44</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00101100</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">!</span></code></td>
+<td><code class="docutils literal"><span class="pre">33</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00100001</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">(space)</span></code></td>
+<td><code class="docutils literal"><span class="pre">32</span></code></td>
+<td><code class="docutils literal"><span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00000000</span> <span class="pre">00100000</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>“Hello, UTF-32!” encoded in UTF-32:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span>00000000 00000000 00000000 00100000 H
+00000000 00000000 00000000 01100101 e
+00000000 00000000 00000000 01101100 l
+00000000 00000000 00000000 01101100 l
+00000000 00000000 00000000 01101111 o
+00000000 00000000 00000000 00101100 ,
+00000000 00000000 00000000 00100000
+00000000 00000000 00000000 00110111 U
+00000000 00000000 00000000 01010100 T
+00000000 00000000 00000000 01000110 F
+00000000 00000000 00000000 00101101 -
+00000000 00000000 00000000 00110011 3
+00000000 00000000 00000000 00110010 2
+00000000 00000000 00000000 00100001 !
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="which-encoding-should-i-use">
+<h4>Which Encoding Should I Use?<a class="headerlink" href="#which-encoding-should-i-use" title="Permalink to this headline">¶</a></h4>
+<p>The short answer to this question is UTF-8. UTF-8 is the most space efficient and
+is backwards compatible with Ascii (unlike UTF-16 or UTF-32).</p>
+<p>This table compares the encodings we have covered here:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="18%" />
+<col width="27%" />
+<col width="23%" />
+<col width="21%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Characters</th>
+<th class="head">Variable Width?</th>
+<th class="head">Smallest Size</th>
+<th class="head">Biggest Size</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Ascii</td>
+<td>128</td>
+<td>No</td>
+<td>1 Byte</td>
+<td>1 Bytes</td>
+</tr>
+<tr class="row-odd"><td>UTF-8</td>
+<td>109,384</td>
+<td>Yes</td>
+<td>1 Byte</td>
+<td>4 Bytes</td>
+</tr>
+<tr class="row-even"><td>UTF-16</td>
+<td>109,384</td>
+<td>Yes</td>
+<td>2 Bytes</td>
+<td>4 Bytes</td>
+</tr>
+<tr class="row-odd"><td>UTF-32</td>
+<td>109,384</td>
+<td>No</td>
+<td>4 Bytes</td>
+<td>4 Bytes</td>
+</tr>
+</tbody>
+</table>
+<p>Some of the reasons you might use a Encoding other than UTF-8 include:</p>
+<blockquote>
+<div><ul class="simple">
+<li>You need to be compatible with some system that for some reason is using something else.</li>
+<li>The encoding is more efficient with the text you are handling</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Java and Windows both use UTF-16 as it is backwards compatible with UCS-2 (An early version of UTF-16),
+which they both used before UTF-16 was developed.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">AS 91371</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Representation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#binary-it-s-as-easy-as-01-10-11"><strong>Binary</strong> - It’s as easy as 01, 10, 11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#safety-in-numbers">Safety In <strong>Numbers</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#no-strings-attached">No <strong>Strings</strong> Attached</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="encoding.html">Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="human-interaction.html">Human Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">AS 91371</a></li>
+      <li>Next: <a href="encoding.html" title="next chapter">Encoding</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Jackson Chadfield.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/data.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

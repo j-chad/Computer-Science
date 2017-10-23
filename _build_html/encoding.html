@@ -1,0 +1,559 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Encoding &#8212; AS 91371  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Human Interaction" href="human-interaction.html" />
+    <link rel="prev" title="Data Representation" href="data.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="encoding">
+<h1>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="error-control">
+<h2>Error Control<a class="headerlink" href="#error-control" title="Permalink to this headline">¶</a></h2>
+<p>One of the problems with computing is that data can be accidentally changed, lost or malformed.
+This can be caused by scratches on cd’s, A damaged barcode, human error or wifi packets being dropped.
+It is very important that we are able to detect any loss or change in data, so that we don’t use the incorrect data, which could
+prove to be a disaster (e.g. A Bank).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="docutils">
+<dt>There are two types of errors:</dt>
+<dd><ul class="first last simple">
+<li>Single bit</li>
+<li>Burst</li>
+</ul>
+</dd>
+</dl>
+<div class="last line-block">
+<div class="line">A single bit error occurs when one bit of data is changed.</div>
+<div class="line">A burst error is when more than one bit of data is changed.</div>
+</div>
+</div>
+<div class="section" id="parity-bits">
+<h3>Parity Bits<a class="headerlink" href="#parity-bits" title="Permalink to this headline">¶</a></h3>
+<p>One of the techniques to detect a change in data is called a parity bit.
+This is the simplest error control technique and is simply a bit added on to the data which represents whether
+the data has an even amount of <code class="docutils literal"><span class="pre">1</span></code>’s.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="29%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="7">Data</th>
+<th class="head">Parity Bit</th>
+<th class="head">Valid?</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>Because there are 2 <code class="docutils literal"><span class="pre">1</span></code>’s the parity bit is set to 0. If it was an “odd parity bit” it would instead be set to <code class="docutils literal"><span class="pre">0</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It does not matter if the parity bit is even or odd,
+as long as all systems that will use the data use the same system.</p>
+</div>
+<p>If a single bit error occurs:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="30%" />
+<col width="18%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="7">Data</th>
+<th class="head">Parity Bit</th>
+<th class="head">Valid</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>We know that the data is incorrect as the parity bit does not match.
+This still works even if the parity bit is switched.</p>
+<p>A parity bit however, can not tell if the data was modified an even number of times.
+If the data above is changed once again, the parity bit will be correct although the data will be different.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="30%" />
+<col width="18%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="7">Data</th>
+<th class="head">Parity Bit</th>
+<th class="head">Valid</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>A slightly more advanced version of this is called “Two dimensional Parity”.
+In two dimensional parity, data is split up into groups and a parity bit is added to each.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="7">Data</th>
+<th class="head">Parity</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>We then add the second dimension by appending another group,
+which contains the parity for the rows.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&#160;</th>
+<th class="head" colspan="7">Data</th>
+<th class="head">Parity</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="3"><strong>Data</strong></td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td><strong>Parity</strong></td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The bottom right hand corner can be based off of its column or row,
+they should have the same value.</p>
+</div>
+<p>This is a much more effective technique to apply parity than using single dimensional parity and will detect burst errors.
+Two dimensional parity means that you would have to flip 4 or more bits in order for a change to go unnoticed.
+If a single bit error occurs, the data can be recovered. The main problem with two dimensional parity is the amount of extra data that
+needs to be transmitted. For each piece of data you need to send the parity bits will take up <span class="math">\(x+y+1\)</span> bits (where <span class="math">\(x\)</span> is the group size, and <span class="math">\(y\)</span> is the number of groups)</p>
+</div>
+<div class="section" id="checksum">
+<h3>Checksum<a class="headerlink" href="#checksum" title="Permalink to this headline">¶</a></h3>
+<p>A checksum is a number which is derived from the input data. If the data is modified, then the checksum will return a completely new number.
+When the data is received, the checksum is recalculated. If the checksum is different from the previously calculated checksum then there must be an error.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p>Using a simple “Modular Sum Checksum”</p>
+<ol class="arabic simple">
+<li>Break the data up into groups of <span class="math">\(n\)</span> bits</li>
+<li>Add all groups together</li>
+<li>Discard bits so that there are <span class="math">\(n\)</span> bits</li>
+<li>Get the two’s compliment of the sum</li>
+</ol>
+<p>If we have the data:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">01010100</span>
+<span class="mi">11010010</span>
+<span class="mi">10100100</span>
+<span class="mi">11001010</span>
+<span class="mi">10010010</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li>Split the data into groups of 8 (already done)</li>
+<li>Add all groups together</li>
+</ol>
+<div class="math">
+\[\begin{split}\frac{
+      \begin{array}[b]{r}
+         01010100\\
+         11010010\\
+         10100100\\
+         11001010\\
+         10010010
+      \end{array}
+   }{
+      1100100110
+   }\end{split}\]</div>
+<ol class="arabic" start="3">
+<li><p class="first">Discard bits</p>
+<p><span class="math">\(11001001\)</span></p>
+</li>
+<li><p class="first">Calculate two’s compliment</p>
+<p><span class="math">\(00110111\)</span></p>
+</li>
+</ol>
+<p class="last">The checksum for the above data is: <span class="math">\(00110111\)</span></p>
+</div>
+</div>
+</div>
+<div class="section" id="encryption">
+<h2>Encryption<a class="headerlink" href="#encryption" title="Permalink to this headline">¶</a></h2>
+<p>Encryption is a way to secure your data using math to return unreadable text to people who do not know the “password”.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Data which has been encrypted is known as “<strong>cipher text</strong>”,
+and data which hasn’t been encrypted is referred to as “<strong>plain text</strong>”.
+A <strong>key</strong> is the data needed to encrypt or decrypt data (e.g. password).</p>
+</div>
+<div class="section" id="symmetric-encryption">
+<h3>Symmetric Encryption<a class="headerlink" href="#symmetric-encryption" title="Permalink to this headline">¶</a></h3>
+<p>Encryption techniques use the concept of “<strong>private keys</strong>”. These are kept secret and
+are the only way to “unlock” the data. The key is used to generate the secret and also to unlock it.
+symmetric encryption is sometimes referred to as “<strong>private key encryption</strong>”.</p>
+<p>An early example of symmetric encryption is the “Caesar Cipher”.</p>
+<div class="section" id="caesar-cipher">
+<h4>Caesar Cipher<a class="headerlink" href="#caesar-cipher" title="Permalink to this headline">¶</a></h4>
+<p>This cipher is probably well known to most people. It substitutes letters for others in the alphabet by shifting the letters.
+The key for a Caesar Cipher is the number of letters that you shift the alphabet by.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p>Caesar cipher with a key of <code class="docutils literal"><span class="pre">3</span></code></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">A</th>
+<th class="head">B</th>
+<th class="head">C</th>
+<th class="head">D</th>
+<th class="head">E</th>
+<th class="head">F</th>
+<th class="head">G</th>
+<th class="head">H</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>X</td>
+<td>Y</td>
+<td>Z</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+</tr>
+</tbody>
+</table>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only the first 8 letters are shown
+for the sake of brevity</p>
+</div>
+</div>
+<p>To encrypt text with this data, we simply substitute each letter with the letter <span class="math">\(n\)</span> further in the alphabet.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p class="last">To encrypt the text: “<code class="docutils literal"><span class="pre">wow,</span> <span class="pre">so</span> <span class="pre">secure!</span></code>” with a key of <code class="docutils literal"><span class="pre">3</span></code>, we start with
+the letter <code class="docutils literal"><span class="pre">w</span></code> and find the letter <code class="docutils literal"><span class="pre">3</span></code> ahead of it: “<cite>z</cite>”. we then repeat this for all the letters
+until we end up with “<code class="docutils literal"><span class="pre">zrz,</span> <span class="pre">vr</span> <span class="pre">vhfxuh!</span></code>”. To decrypt it we simply go back 3 letters in the alphabet for each letter.</p>
+</div>
+<p>This is a very insecure algorithm for various reasons:</p>
+<blockquote>
+<div><ul class="simple">
+<li>There are only 26 possible keys. The encryption could be broken by simply trying each key and seeing if it makes sense.
+Really good encryption algorithms will have infinite, or enough keys for it not to matter.</li>
+<li>Some information can still be gathered from the cipher text. Word count, letter frequency (even if you can’t tell what letter) and
+the length of each word can be found with no work.</li>
+<li>Because the letters are merely substituted, it is vulnerable to an attack known as <strong>frequency analysis</strong>.
+This is essentially taking the most common english letters: <code class="docutils literal"><span class="pre">e</span></code>, <code class="docutils literal"><span class="pre">t</span></code>, <code class="docutils literal"><span class="pre">a</span></code>, <code class="docutils literal"><span class="pre">o</span></code> and <code class="docutils literal"><span class="pre">i</span></code>. Then counting the frequency of
+letters in the encrypted text. It is likely that the most frequent letter will be one of these. This narrows the possible keys down from an already small number
+to a very very small number.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="modern-symmetric-encryption-algorithms">
+<h4>Modern Symmetric Encryption Algorithms<a class="headerlink" href="#modern-symmetric-encryption-algorithms" title="Permalink to this headline">¶</a></h4>
+<p>A caesar cipher is not secure enough to keep any of our data secret.
+This probably has something to do with it being invented circa 50 B.C.
+Since then, billions of new encryption algorithms have been developed.
+Some of the most common modern private key encryption algorithms are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>AES</li>
+<li>Blowfish</li>
+<li>IDEA</li>
+<li>Triple DES</li>
+</ul>
+</div></blockquote>
+<p>The most common and best (so far), is <strong>AES</strong> (Advanced Encryption Standard).</p>
+</div>
+<div class="section" id="the-problem-with-symmetric-encryption">
+<h4>The Problem With Symmetric Encryption<a class="headerlink" href="#the-problem-with-symmetric-encryption" title="Permalink to this headline">¶</a></h4>
+<p>There is one fundamental flaw with using a single key for both encrypting and decrypting.
+In order for two devices to communicate, they must first exchange and agree on a key to use.
+This initial communication must use plain text which can be intercepted. An attacker can then see all the data being sent.</p>
+</div>
+</div>
+<div class="section" id="asymmetric-encryption">
+<h3>Asymmetric Encryption<a class="headerlink" href="#asymmetric-encryption" title="Permalink to this headline">¶</a></h3>
+<p>This form of encryption aims to solve the problem of the beginning insecure key exchange. Instead of having a single key which must be kept private,
+we use two keys: a private key <strong>and</strong> a public key. The public key is sent out and made available to everyone, while the private key is kept… private.
+Asymmetric encryption algorithms have a special relationship between these keys. The public key <strong>can encrypt* but **can not decrypt</strong>. The private key is the opposite and can only <strong>decrypt</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This relationship between keys leads to another handy property of asymmetric encryption. To verify that the message is from the correct person,
+the sender can “<strong>sign</strong>” the message with their private key. This can then be verified by the receiver by using the senders <strong>public</strong> key.</p>
+</div>
+<p>Some popular asymmetric encryption algorithms include:</p>
+<blockquote>
+<div><ul class="simple">
+<li>RSA</li>
+<li>DSA</li>
+<li>Diffie-Hellman Key Exchange</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="asymmetric-or-symmetrical-encryption">
+<h3>Asymmetric Or Symmetrical Encryption?<a class="headerlink" href="#asymmetric-or-symmetrical-encryption" title="Permalink to this headline">¶</a></h3>
+<p>The type of encryption you use is dependant on the use case.
+Asymmetrical encryption is extremely useful in messaging applications where the data must be secure,
+while symmetrical encryption is much better suited for applications where the data doesnt need to be sent to other people.
+There also exists types of <strong>hybrid</strong> encryption where both symmetric and asymmetric algorithms are blended to improve both.</p>
+</div>
+</div>
+<div class="section" id="compression">
+<h2>Compression<a class="headerlink" href="#compression" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">AS 91371</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data Representation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Encoding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#error-control">Error Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#encryption">Encryption</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compression">Compression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="human-interaction.html">Human Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">Todo</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="data.html" title="previous chapter">Data Representation</a></li>
+      <li>Next: <a href="human-interaction.html" title="next chapter">Human Interaction</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Jackson Chadfield.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/encoding.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
